@@ -15,14 +15,14 @@ router.get('/start', async (req: Request, res: Response) => {
     return res.json({ thread_id: threadId });
 });
 
-router.post('/chat', body('message').notEmpty(), async (req: Request, res: Response) => {
+router.post('/chat', [body('message').notEmpty(), body('thread_id').notEmpty()], async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { message } = req.body;
-    const response = await sendMessage(message);
+    const data: { thread_id: string; message: string } = req.body;
+    const response = await sendMessage(data.thread_id, data.message);
     return res.json({ response });
 });
 
