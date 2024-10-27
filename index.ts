@@ -20,6 +20,7 @@ router.post('/chat', [body('message').notEmpty(), body('thread_id').notEmpty()],
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+    console.log('[CHAT] Request body:', JSON.stringify(req.body));
 
     const data: { thread_id: string; message: string } = req.body;
     const response = await sendMessage(data.thread_id, data.message);
