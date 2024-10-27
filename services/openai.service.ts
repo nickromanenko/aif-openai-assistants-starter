@@ -21,5 +21,5 @@ export async function sendMessage(threadId: string, content: string) {
     const response: any = data[0].content[0];
     console.log(response.text);
     const responseText = response.text.value.replace(/【.*?】/g, '');
-    return responseText;
+    return { content: responseText };
 }
